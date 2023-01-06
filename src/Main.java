@@ -4,38 +4,41 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
-        int num = num1(str, index(str));
-        int num1 = num2(str, index(str));
-        System.out.println(num);
-        System.out.println(num1);
+        System.out.println("Пример ввода: 1 + 2 (Цифра, пробел, арифметический оператор, пробел, цифра)");
+        System.out.print("Введите выражение: ");
+        try {
+            String str = sc.nextLine();
+            String[] strings = str.split(" ");
+            int num1 = Integer.parseInt(strings[0]);
+            int num2 = Integer.parseInt(strings[2]);
+            calc(num1, num2, str);
+        }catch (NumberFormatException e){
+            System.out.println("Проблемы с вводом, повторите ввод");
+        }
+
     }
 
-    public static int index(String str){
-        if(str.indexOf('+') >= 0){
-            return 0;
-        }
-        if(str.indexOf('-') >= 0){
-            return 1;
-        }
-        if(str.indexOf('*') >= 0){
-            return 2;
-        }
-        if(str.indexOf('/') >= 0){
-            return 3;
-        }
-        return -1;
+public static void calc(int num1, int num2, String str){
+        boolean b1 = num1 <= 10 && num1 >= 1;
+        boolean b2 = num2 <= 10 && num2 >= 1;
+                if (str.indexOf('+') >= 0) {
+                    System.out.println(num1 + num2);
+                }
+                if (str.indexOf('-') >= 0) {
+                    System.out.println(num1 - num2);
+                }
+                if (str.indexOf('*') >= 0) {
+                    System.out.println(num1 * num2);
+                }
+                if (str.indexOf('/') >= 0) {
+                    System.out.println((num1 - (num1 % num2)) / num2);
+                }
     }
 
-    public static int num1(String str, int index){
-        char[] a = {'+', '-', '*', '/'};    //npe index -1 при отсутствии символа
-        return Integer.parseInt(str.substring(0, str.indexOf(a[index])));
-    }
 
-    public static int num2(String str, int index){
-        char[] a = {'+', '-', '*', '/'};    //npe index -1 при отсутствии символа
-        return Integer.parseInt(str.substring(str.indexOf(a[index]), str.length()));
-    }
+
+
+
 }
