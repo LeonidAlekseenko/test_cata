@@ -4,43 +4,40 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws NumberFormatException{
+    public static void main(String[] args) throws MyException{
         Scanner sc = new Scanner(System.in);
-        System.out.println("Пример ввода: 1 + 2 (Цифра, пробел, арифметический оператор, пробел, цифра)");
-        System.out.print("Введите выражение: ");
-        String str = sc.nextLine();
+        String text = sc.nextLine();
+        String[] arrStr = text.split(" ");
+
         try {
-            String[] strings = str.split(" ");
-            int num1 = Integer.parseInt(strings[0]);
-            int num2 = Integer.parseInt(strings[2]);
-            calc(num1, num2, str);
-        }catch (NumberFormatException e){
-            System.out.println("Проблемы с вводом, повторите ввод!");
+            calc(arrStr, Integer.parseInt(arrStr[0]), Integer.parseInt(arrStr[2]));
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Недапустимое количество символов или отсутствует арифметический оператор");
+
+        } catch (NumberFormatException e) {
+            System.out.println("Формат ввода: цифра, пробел, цифра");
         }
 
     }
 
-public static void calc(int num1, int num2, String str){
-            boolean b1 = num1 <= 10 && num1 >= 1;
-            boolean b2 = num2 <= 10 && num2 >= 1;
-            if (b1 && b2) {
-                if (str.indexOf('+') >= 0) {
-                    System.out.println(num1 + num2);
-                }
-                if (str.indexOf('-') >= 0) {
-                    System.out.println(num1 - num2);
-                }
-                if (str.indexOf('*') >= 0) {
-                    System.out.println(num1 * num2);
-                }
-                if (str.indexOf('/') >= 0) {
-                    System.out.println((num1 - (num1 % num2)) / num2);
-                }
+    public static void calc(String[] str, int a, int b) throws MyException {
+        if (a < 10 && a > 1 || b < 10 && b > 1 ) {
+            if (str[1].equals("+")) {
+                System.out.println(a + b);
+            } else if (str[1].equals("-")) {
+                System.out.println(a - b);
+            } else if (str[1].equals("*")) {
+                System.out.println(a * b);
+            } else if (str[1].equals("/")) {
+                System.out.println((a - (a % b)) / b);
             } else {
-                System.out.println("Проблемы с вводом, повторите ввод!");
+                System.out.println("Повторите ввод");
             }
+        } else {
+            throw new MyException("Ввод только от 1 до 10");
+        }
     }
-
 
 
 
